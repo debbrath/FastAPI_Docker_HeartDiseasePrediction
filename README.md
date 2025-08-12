@@ -34,3 +34,4 @@ heart-fastapi/
 📸 Screenshots
 
 ![alt text](<Image/2025-08-12 13_54_19-Window.png>)
+---

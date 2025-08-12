@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+env/
+venv/
+model/*.joblib
+data/
+*.egg-info
+.DS_Store

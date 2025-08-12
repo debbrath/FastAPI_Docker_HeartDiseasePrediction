@@ -46,7 +46,7 @@ cd heart-disease-api
 docker-compose up --build
 Then visit: http://localhost:8000/docs
 
-## Train model locally
+📦 Train model locally
 ```bash
 python -m pip install -r requirements.txt
 python train_model.py

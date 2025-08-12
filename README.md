@@ -31,6 +31,4 @@ heart-fastapi/
 ├─ README.md
 └─ .gitignore
 
-📸 Screenshots
-![alt text](</Image/2025-08-12 13_54_19-Window.png>)
----
+![Screenshot](https://github.com/debbrath/FastAPI_Docker_HeartDiseasePrediction/blob/main/Image/2025-08-12%2013_54_19-Window.png)

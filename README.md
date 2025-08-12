@@ -5,6 +5,7 @@
 A FastAPI-powered REST API that serves predictions from a machine learning model trained to detect heart disease. This project focuses on containerization with Docker and deployment to the cloud using Render. Built as part of a hands-on assignment to demonstrate practical DevOps, ML, and API development skills.
 
 🔍 Features
+
 ✅ /health — Health check endpoint
 
 📄 /info — Returns model metadata
@@ -14,6 +15,7 @@ A FastAPI-powered REST API that serves predictions from a machine learning model
 🐳 Dockerized for local and cloud deployment
 
 ☁️ Live deployment on Render
+
 
 🧠 Model
 Trained on the Heart Disease UCI dataset

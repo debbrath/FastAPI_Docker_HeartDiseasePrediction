@@ -18,6 +18,7 @@ A FastAPI-powered REST API that serves predictions from a machine learning model
 
 
 🧠 Model
+
 Trained on the Heart Disease UCI dataset
 
 Model type: Random Forest Classifier
@@ -25,6 +26,7 @@ Model type: Random Forest Classifier
 Saved using joblib and served as a REST API
 
 🚀 Tech Stack
+
 FastAPI
 
 scikit-learn

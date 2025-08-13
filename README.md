@@ -1,5 +1,11 @@
 # Heart Disease Prediction (FastAPI + Docker)
 
+🌍 **Live Render Deployment URL**
+
+🔗 [Deployed on Render](https://fastapi-docker-heartdiseaseprediction.onrender.com/docs)
+
+
+
 🫀 Heart Disease Prediction API
 
 A FastAPI-powered REST API that serves predictions from a machine learning model trained to detect heart disease. This project focuses on containerization with Docker and deployment to the cloud using Render. Built as part of a hands-on assignment to demonstrate practical DevOps, ML, and API development skills.
@@ -79,9 +85,6 @@ heart-fastapi/
 ![Screenshot](https://github.com/debbrath/FastAPI_Docker_HeartDiseasePrediction/blob/main/Image/2025-08-12%2016_55_08-Window.png)
 
 
-🌍 Live App
-
-🔗 [Deployed on Render](https://fastapi-docker-heartdiseaseprediction.onrender.com/docs)
 
 ✍️ Author
 

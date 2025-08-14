@@ -1,8 +1,8 @@
 # Heart Disease Prediction (FastAPI + Docker)
 
 # 🌍 Live Render Deployment 
-URL:  🔗 [Live API:](https://heart-disease-prediction-joq2.onrender.com/docs)
-🔗 [Live APPLICATION:](https://fastapi-docker-heartdiseaseprediction.onrender.com)
+URL:  Live API: 🔗 [Swagger Docs](https://heart-disease-prediction-joq2.onrender.com/docs)
+Live APPLICATION:🔗 [Heart Disease Prediction](https://fastapi-docker-heartdiseaseprediction.onrender.com)
 
 
 

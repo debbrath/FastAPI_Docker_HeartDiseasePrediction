@@ -22,7 +22,7 @@ def load_pipeline():
     pipeline, meta = utils.load_model()
 
 # Mount static directory
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
+app.mount("/templates", StaticFiles(directory="app/templates"), name="templates")
 templates = Jinja2Templates(directory="app/templates")
 
 # Serve index.html at /

@@ -23,7 +23,7 @@ def load_pipeline():
 
 # Mount static directory
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
-templates = Jinja2Templates(directory="app/static")
+templates = Jinja2Templates(directory="app/templates")
 
 # Serve index.html at /
 @app.get("/", response_class=HTMLResponse)

@@ -13,10 +13,17 @@ def load_model():
     return pipeline, meta
 
 def predict_from_dict(pipeline, input_dict):
-    # convert to DataFrame so get_dummies aligns with training
+    import pandas as pd
+
     df = pd.DataFrame([input_dict])
-    # Note: training used pd.get_dummies(drop_first=True) — to be safe, apply same transform here
     df = pd.get_dummies(df, drop_first=True)
-    # Align columns: add missing columns with zeros
-    # We expect pipeline to have been trained on fixed set; the pipeline's imputers will accept missing columns
-    return pipeline.predict(df)[0], pipeline.predict_proba(df)[0][1]  # return class and probability of class 1
+
+    # Align prediction features with training features
+    for col in pipeline.feature_names_in_:
+        if col not in df.columns:
+            df[col] = 0
+    df = df[pipeline.feature_names_in_]
+
+    prediction = pipeline.predict(df)[0]
+    probability = pipeline.predict_proba(df)[0][1]
+    return prediction, probability

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Heart Disease Prediction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-pink-200 via-red-100 to-yellow-100 min-h-screen flex items-center justify-center p-4 font-sans">
+
+<!-- Sticky Navbar -->
+<nav class="fixed top-0 w-full bg-white/40 backdrop-blur-md shadow-lg border-b border-white/30 z-50">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
+        <h1 class="text-xl font-bold bg-gradient-to-r from-red-500 to-pink-500 bg-clip-text text-transparent">
+            ❤️ Heart Disease Prediction
+        </h1>
+        <a href="https://heart-disease-prediction-joq2.onrender.com/docs" target="_blank"
+           class="px-5 py-2 rounded-full bg-gradient-to-r from-pink-500 to-red-500 text-white font-semibold shadow-lg hover:from-red-500 hover:to-pink-500 transition-transform transform hover:-translate-y-0.5">
+            📄 API Docs
+        </a>
+    </div>
+</nav>
+<!-- Main Container -->
+<div class="flex justify-center items-center pt-28 px-4">
+    <div class="w-full max-w-4xl backdrop-blur-lg bg-gray/50 shadow-2xl rounded-2xl p-10 border border-white/40">
+
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-extrabold bg-gradient-to-r from-red-500 to-pink-500 bg-clip-text text-transparent">
+                Check Your Heart Health
+            </h2>
+            <p class="text-gray-600 mt-2">Fill in the details below and get instant prediction</p>
+        </div>
+
+    <!-- Form -->
+    <form id="predictionForm" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Floating Label Inputs -->
+            <div class="relative">
+              <label for="age" class="label">Age</label>  
+              <input type="number" step="0.1" name="age" id="age" class="peer input" placeholder=" " required>              
+                
+            </div>
+            <div class="relative">
+              <label for="sex" class="label">Sex</label>
+              <select name="sex" class="input">
+                <option value="1">Male</option>
+                <option value="0">Female</option>
+              </select>                
+            </div>
+            <div class="relative">
+              <label for="cp" class="label">Chest Pain Type (cp)</label>
+              <select name="cp">
+                <option value="0">Typical Angina</option>
+                <option value="1">Atypical Angina</option>
+                <option value="2">Non-anginal Pain</option>
+                <option value="3">Asymptomatic</option>
+              </select>
+
+            </div>
+            <div class="relative">
+                <label for="trestbps" class="label">Resting BP</label>
+                <input type="number" step="0.1" name="trestbps" id="trestbps" class="peer input" placeholder=" " required>
+                
+            </div>
+            <div class="relative">
+                <label for="chol" class="label">Cholesterol</label>
+                <input type="number" step="0.1" name="chol" id="chol" class="peer input" placeholder=" " required>
+                
+            </div>
+            <div class="relative">
+                <label for="fbs" class="label">Fasting Blood Sugar</label>
+                <select name="fbs">
+                  <option value="1">Yes</option>
+                  <option value="0">No</option>
+                </select>
+
+                
+            </div>
+            <div class="relative">
+                <label for="restecg" class="label">Rest ECG</label>
+                <select name="restecg">
+                  <option value="0">Normal</option>
+                  <option value="1">ST-T Abnormality</option>
+                  <option value="2">Left Ventricular Hypertrophy</option>
+                </select>
+
+                
+            </div>
+            <div class="relative">
+                <label for="thalach" class="label">Max Heart Rate</label>
+                <input type="number" step="0.1" name="thalach" id="thalach" class="peer input" placeholder=" " required>
+                
+            </div>
+            <div class="relative">
+                <label for="exang" class="label">Exercise Angina</label>
+                <select name="exang">
+                  <option value="1">Yes</option>
+                  <option value="0">No</option>
+                </select>
+
+                
+            </div>
+            <div class="relative">
+                <label for="oldpeak" class="label">Oldpeak</label>
+                <input type="number" step="0.1" name="oldpeak" id="oldpeak" class="peer input" placeholder=" " required>
+                
+            </div>
+            <div class="relative">
+                <label for="slope" class="label">Slope</label>
+                <select name="slope">
+                  <option value="0">Upsloping</option>
+                  <option value="1">Flat</option>
+                  <option value="2">Downsloping</option>
+                </select>
+                
+            </div>
+            <div class="relative">
+                <label for="ca" class="label">CA</label>
+                <select name="ca">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+                
+            </div>
+            <div class="relative">
+                <label for="thal" class="label">Thal</label>
+                <select name="thal">
+                  <option value="1">Normal</option>
+                  <option value="2">Fixed Defect</option>
+                  <option value="3">Reversible Defect</option>
+                </select>
+
+                
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="w-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white py-3 rounded-lg font-semibold text-lg shadow-lg transition transform hover:scale-105">
+            🔍 Predict
+        </button>
+    </form>
+
+    <!-- Result Box -->
+    <div id="resultBox" class="hidden mt-8 p-5 rounded-lg text-center font-semibold shadow-lg text-lg fade-in"></div>
+</div>
+</div>
+<!-- Script -->
+<script>
+document.getElementById("predictionForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData.entries());
+    for (let key in data) {
+        data[key] = parseFloat(data[key]);
+    }
+
+    const response = await fetch("/predict", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+    const resultBox = document.getElementById("resultBox");
+
+    if (result.heart_disease) {
+        resultBox.textContent = "💔 Positive for Heart Disease";
+        resultBox.className = "mt-8 p-5 rounded-lg text-center font-semibold text-lg bg-red-100 text-red-700 shadow-lg fade-in";
+    } else {
+        resultBox.textContent = "💖 Negative for Heart Disease";
+        resultBox.className = "mt-8 p-5 rounded-lg text-center font-semibold text-lg bg-green-100 text-green-700 shadow-lg fade-in";
+    }
+
+    resultBox.classList.remove("hidden");
+});
+</script>
+
+<style>
+.input {
+    @apply border border-gray-300 rounded-lg p-3 w-full bg-white/50 focus:ring-2 focus:ring-pink-400 focus:outline-none;
+}
+.label {
+    @apply absolute left-3 top-3 text-gray-500 text-sm transition-all duration-200 peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-0 peer-focus:text-pink-500 peer-focus:text-sm bg-white/70 px-1 rounded;
+}
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</body>
+</html>

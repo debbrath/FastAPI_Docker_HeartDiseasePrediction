@@ -1,12 +1,11 @@
-# train_model.py
-import pandas as pd
-import numpy as np
-from pathlib import Path
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.pipeline import Pipeline
+from imblearn.pipeline import Pipeline  # ✅ Use imblearn's pipeline
+from imblearn.over_sampling import SMOTE  # ✅ Import SMOTE
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from pathlib import Path
+import pandas as pd
 import joblib
 
 DATA_PATH = Path("data/heart.csv")
@@ -15,7 +14,6 @@ MODEL_DIR.mkdir(exist_ok=True)
 
 def load_data(path=DATA_PATH):
     df = pd.read_csv(path)
-    # Common Kaggle heart datasets use 'target' column; else try variations
     if 'target' in df.columns:
         target_col = 'target'
     elif 'HeartDisease' in df.columns:
@@ -30,14 +28,13 @@ def load_data(path=DATA_PATH):
 
 def train():
     X, y = load_data()
-    # For simplicity: use all numeric columns. Convert categoricals if present via get_dummies
     X = pd.get_dummies(X, drop_first=True)
-
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
 
     pipeline = Pipeline([
         ("imputer", SimpleImputer(strategy="median")),
         ("scaler", StandardScaler()),
+        ("smote", SMOTE(random_state=42)),  # ✅ Apply SMOTE after scaling
         ("clf", RandomForestClassifier(n_estimators=100, random_state=42))
     ])
 
@@ -45,11 +42,10 @@ def train():
     acc = pipeline.score(X_test, y_test)
     print(f"Test accuracy: {acc:.4f}")
 
-    # Save model and feature list
     model_path = MODEL_DIR / "heart_model.joblib"
     meta = {
         "feature_names": list(X.columns),
-        "model_type": "RandomForestClassifier",
+        "model_type": "RandomForestClassifier with SMOTE",
         "accuracy": float(acc)
     }
     joblib.dump({"pipeline": pipeline, "meta": meta}, model_path)

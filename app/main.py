@@ -1,38 +1,66 @@
 # app/main.py
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from app.schemas import HeartInput
-from app.utils import load_model, predict_from_dict
-from typing import Dict
+import joblib
+import numpy as np
+import os
+from app import utils  # Import the whole module, avoids circular issues
+
+pipeline = None
+meta = None
+
 
 app = FastAPI(title="Heart Disease Prediction API")
+# Load model and metadata
 
-pipeline, meta = load_model()
-FEATURE_LIST = meta.get("feature_names", None)
-MODEL_TYPE = meta.get("model_type", "unknown")
-MODEL_ACC = meta.get("accuracy", None)
+@app.on_event("startup")
+def load_pipeline():
+    global pipeline, meta
+    pipeline, meta = utils.load_model()
+
+# Mount static directory
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
+templates = Jinja2Templates(directory="app/static")
+
+# Serve index.html at /
+@app.get("/", response_class=HTMLResponse)
+async def serve_home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+@app.get("/test", response_class=HTMLResponse)
+def test_html():
+    return "<h1>Hello World</h1>"
 
 @app.get("/health")
-def health():
-    return {"status": "ok"}
+def health_check():
+    return {"status": "healthy"}
 
 @app.get("/info")
-def info():
+def get_info():
     return {
-        "model_type": MODEL_TYPE,
-        "model_accuracy": MODEL_ACC,
-        "features": FEATURE_LIST
+        "model": "RandomForestClassifier",
+        "features": [
+            "age", "sex", "cp", "trestbps", "chol", "fbs",
+            "restecg", "thalach", "exang", "oldpeak",
+            "slope", "ca", "thal"
+        ]
     }
 
 @app.post("/predict")
-def predict(payload: HeartInput):
+def predict(data: HeartInput):
+    input_dict = data.dict()
+    print("🔍 INPUT:", input_dict)  # Debug log
+
     try:
-        x = payload.dict()
-        pred_class, prob = predict_from_dict(pipeline, x)
-        # Map to boolean: assume 1 means disease present
-        heart_disease = bool(int(pred_class))
+        prediction, probability = utils.predict_from_dict(pipeline, input_dict)
+        print(f"✅ Prediction: {prediction} | Probability: {probability:.4f}")  # Debug log
         return {
-            "heart_disease": heart_disease,
-            "probability_disease": float(prob)
+            "heart_disease": bool(prediction),
+            "probability": round(probability, 4)
         }
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        print("❌ Error:", str(e))
+        return {"error": str(e)}

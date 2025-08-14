@@ -63,21 +63,24 @@ python train_model.py
 
 📁 Project Structure
 
-heart-fastapi/
+FastAPI_Docker_HeartDiseasePrediction/
 ├─ app/
-│  ├─ main.py
-│  ├─ schemas.py
-│  ├─ utils.py
+│  ├─ __init__.py
+│  ├─ main.py               # Your FastAPI app code
+│  ├─ schemas.py            # Pydantic schemas
+│  ├─ utils.py              # Helper functions, model loading, predictions
+│  └─ templates/
+│     └─ index.html         # Your HTML template file
 ├─ model/
-│  └─ (after training) heart_model.joblib
+│  └─ heart_model.joblib    # Trained model file
 ├─ data/
-│  └─ heart.csv    # put Kaggle CSV here
-├─ train_model.py
-├─ Dockerfile
-├─ docker-compose.yml
-├─ requirements.txt
-├─ README.md
-└─ .gitignore
+│  └─ heart.csv             # Dataset file
+├─ train_model.py           # Script to train model and save joblib file
+├─ Dockerfile               # Docker build instructions
+├─ docker-compose.yml       # (optional) docker-compose config
+├─ requirements.txt         # Python dependencies
+├─ README.md                # Project documentation
+└─ .gitignore               # Git ignore rules
 
 📸 Screenshots
 ```

@@ -90,6 +90,9 @@ FastAPI_Docker_HeartDiseasePrediction/
 
 ![Screenshot](https://github.com/debbrath/FastAPI_Docker_HeartDiseasePrediction/blob/main/Image/2025-08-12%2016_55_08-Window.png)
 
+![Screenshot](https://github.com/debbrath/FastAPI_Docker_HeartDiseasePrediction/blob/main/Image/2025-08-14 11_59_10-Window.png)
+
+
 
 
 ✍️ Author
